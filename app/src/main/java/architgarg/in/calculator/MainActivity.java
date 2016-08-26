@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private float b = 0;
     private float res = 0;
     private int flag = 0;
+    private int noOfDots = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonDotClicked(View view) {
-        
-        text1.append(".");
+        if (!text1.getText().toString().equals(" ") && noOfDots ==0 ) {
+            text1.append(".");
+            noOfDots = 1;
+        }
     }
 
     public void buttonMultiplyClicked(View view) {
@@ -112,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             a = Float.parseFloat(text1.getText().toString());
             text1.append("X");
             flag = 1;
+            noOfDots = 0;
         }
     }
 
@@ -120,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             a = Float.parseFloat(text1.getText().toString());
             text1.append("/");
             flag = 1;
+            noOfDots = 0;
         }
     }
 
@@ -128,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             a = Float.parseFloat(text1.getText().toString());
             text1.append("+");
             flag = 1;
+            noOfDots = 0;
         }
     }
 
@@ -136,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             a = Float.parseFloat(text1.getText().toString());
             text1.append("-");
             flag = 1;
+            noOfDots = 0;
         }
     }
 
@@ -187,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         b = 0;
         res = 0;
         flag = 0;
+        noOfDots = 0;
     }
 }
 
