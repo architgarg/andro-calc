@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public TextView text1 = null;
-    public TextView text2;
+    public TextView text2 = null;
     private float a = 0;
     private float b = 0;
     private float res = 0;
@@ -104,15 +104,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void buttonDotClicked(View view) {
-        if (!text1.getText().toString().equals(" ") && noOfDots ==0 ) {
+        if (!text1.getText().toString().equals(" ") && noOfDots == 0) {
             text1.append(".");
             noOfDots = 1;
         }
     }
 
     public void buttonMultiplyClicked(View view) {
+        char c = text1.getText().toString().charAt(text1.getText().toString().length() - 1);
+        if (c == '.') {
+            text1.append("0");
+        }
         if (flag == 0 && !text1.getText().toString().equals(" ")) {
-            a = Float.parseFloat(text1.getText().toString());
             text1.append("X");
             flag = 1;
             noOfDots = 0;
@@ -120,8 +123,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonDivideClicked(View view) {
+        char c = text1.getText().toString().charAt(text1.getText().toString().length() - 1);
+        if (c == '.') {
+            text1.append("0");
+        }
         if (flag == 0 && !text1.getText().toString().equals(" ")) {
-            a = Float.parseFloat(text1.getText().toString());
             text1.append("/");
             flag = 1;
             noOfDots = 0;
@@ -129,8 +135,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonPlusClicked(View view) {
+        char c = text1.getText().toString().charAt(text1.getText().toString().length() - 1);
+        if (c == '.') {
+            text1.append("0");
+        }
         if (flag == 0 && !text1.getText().toString().equals(" ")) {
-            a = Float.parseFloat(text1.getText().toString());
             text1.append("+");
             flag = 1;
             noOfDots = 0;
@@ -138,8 +147,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonMinusClicked(View view) {
+        char c = text1.getText().toString().charAt(text1.getText().toString().length() - 1);
+        if (c == '.') {
+            text1.append("0");
+        }
         if (flag == 0 && !text1.getText().toString().equals(" ")) {
-            a = Float.parseFloat(text1.getText().toString());
             text1.append("-");
             flag = 1;
             noOfDots = 0;
@@ -147,54 +159,81 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonEqualClicked(View view) {
-        String array[];
-        if (text1.getText().toString().contains("/")) {
-            array = text1.getText().toString().split("/");
-        } else if (text1.getText().toString().contains("X")) {
-            array = text1.getText().toString().split("X");
-        } else if (text1.getText().toString().contains("-")) {
-            array = text1.getText().toString().split("-");
+
+        char c = text1.getText().toString().charAt(text1. getText().toString().length() - 1);
+
+        if (text1.getText() == null) {
+            text1.setText(" ");
+        } else if (!text1.getText().toString().contains("/") && !text1.getText().toString().contains(
+                "X") && !text1.getText().toString().contains("-") && !text1.getText().toString().contains("+")) {
+            text1.setText(text1.getText());
+        } else if (c == '/' || c == 'X' || c == '-' || c == '+' || c == '.') {
+            text2.setText("Error");
+            text1.setText(" ");
+            a = 0;
+            b = 0;
+            res = 0;
+            flag = 0;
+            noOfDots = 0;
         } else {
-            array = text1.getText().toString().split("\\+");
-        }
+            String array[];
+            if (text1.getText().toString().contains("/")) {
+                array = text1.getText().toString().split("/");
+            } else if (text1.getText().toString().contains("X")) {
+                array = text1.getText().toString().split("X");
+            } else if (text1.getText().toString().contains("-")) {
+                array = text1.getText().toString().split("-");
+            } else {
+                array = text1.getText().toString().split("\\+");
+            }
 
-        array[0].replaceAll("\\s", " ");
-        array[1].replaceAll("\\s", " ");
+            array[0].replaceAll("\\s", " ");
+            array[1].replaceAll("\\s", " ");
 
-        a = Float.parseFloat(array[0].toString());
-        b = Float.parseFloat(array[1].toString());
+            a = Float.parseFloat(array[0].toString());
+            b = Float.parseFloat(array[1].toString());
 
-        Log.d("Archit", "a =" + a);
-        Log.d("Archit", "b =" + b);
-
-
-        if (text1.getText().toString().contains("/")) {
-            res = a / b;
-            Log.d("Archit", "res = " + res);
-            text2.setText(Float.toString(res));
-        } else if (text1.getText().toString().contains("X")) {
-            res = a * b;
-            Log.d("Archit", "res = " + res);
-            text2.setText(Float.toString(res));
-        } else if (text1.getText().toString().contains("-")) {
-            res = a - b;
-            Log.d("Archit", "res = " + res);
-            text2.setText(Float.toString(res));
-        } else {
-            res = a + b;
-            Log.d("Archit", "res = " + res);
-            text2.setText(Float.toString(res));
+            if (text1.getText().toString().contains("/")) {
+                res = a / b;
+                Log.d("Archit", "res = " + res);
+                text2.setText(Float.toString(res));
+            } else if (text1.getText().toString().contains("X")) {
+                res = a * b;
+                text2.setText(Float.toString(res));
+            } else if (text1.getText().toString().contains("-")) {
+                res = a - b;
+                Log.d("Archit", "res = " + res);
+                text2.setText(Float.toString(res));
+            } else {
+                res = a + b;
+                Log.d("Archit", "res = " + res);
+                text2.setText(Float.toString(res));
+            }
         }
     }
 
     public void buttonCEClicked(View view) {
-        text1.setText(" ");
-        text2.setText(" ");
-        a = 0;
-        b = 0;
-        res = 0;
-        flag = 0;
-        noOfDots = 0;
+        if (res == 0) {
+            if (text1.getText().toString().length() > 0) {
+                char c = text1.getText().toString().charAt(text1.getText().toString().length() - 1);
+                String s = text1.getText().toString().substring(0, text1.getText().toString().length() - 1);
+                text1.setText(s);
+                text2.setText(" ");
+                if (c == '/' || c == 'X' || c == '-' || c == '+' || c == '.') {
+                    flag = 0;
+                    noOfDots = 0;
+                }
+            }
+        } else {
+            text1.setText(" ");
+            text2.setText(" ");
+            a = 0;
+            b = 0;
+            res = 0;
+            flag = 0;
+            noOfDots = 0;
+        }
     }
 }
+
 
